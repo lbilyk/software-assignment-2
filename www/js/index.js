@@ -24,11 +24,19 @@ function moveElevator(floor) {
 
     let currentFloor = parseInt($('#currentFloor').text());
     if (floor !== currentFloor) {
-        let data = 'action=moveElevator&floor=' + floor;
+        let data = 'action=updateRequest&floor=' + floor;
         let dataType = 'text';
         let success = callToServer(data, dataType);
-        if(success) {
+        if (success) {
             ($('#requestedFloor').text(floor));
+            $.ajax({
+                type: "POST",
+                url: SERVER_REQUESTS,
+                async: true,
+                data: 'action=moveElevator&floor=' + floor,
+                success: function (data) {
+                }
+            });
         }
     }
 }

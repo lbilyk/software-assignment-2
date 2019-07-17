@@ -5,12 +5,17 @@ require_once 'dbconfig.php';
 $action = filter_input(INPUT_POST, 'action');
 
 switch ($action) {
-    case 'moveElevator':
+    case 'updateRequest':
         $floor = filter_input(INPUT_POST, 'floor');
-        echo updateFloor($floor);
+        $success = updateFloor($floor);
+        echo $success;
         break;
     case 'getCurrentFloor':
         echo getCurrentFloor();
+        break;
+    case 'moveElevator':
+        $floor = filter_input(INPUT_POST, 'floor');
+        moveElevator($floor);
         break;
     default:
         echo null;

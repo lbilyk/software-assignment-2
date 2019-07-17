@@ -23,3 +23,13 @@ function getCurrentFloor() {
     return $row[0];
 
 }
+
+function moveElevator($floor) {
+
+    sleep(2);
+    global $mysqli;
+    $query = "UPDATE elevatornetwork SET currentFloor = ? WHERE nodeID = 1";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param("i",$floor);
+    $statement->execute();
+}
