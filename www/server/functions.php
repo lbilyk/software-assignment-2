@@ -1,66 +1,35 @@
 <?php
-require_once '../server/server_requests.php';
-require_once '../server/dbconfig.php';
-
-function getCurrentDate() {
-
-    return $date = date('Y-m-d H:i:s');
-}
-
-function getLogbookData(){
-
-    global $mysqli;
-    $query = "SELECT * FROM logbook";
-    $entries = array();
-    $statement = $mysqli->prepare($query);
-    $statement->execute();
-    $result = $statement->get_result();
-    while($row = mysqli_fetch_assoc($result)) {
-        $entries[] = $row;
-    }
-    return json_encode($entries);
-}
-
-function addLogbookEntry($entry, $user, $date) {
-
-    global $mysqli;
-    $query = "INSERT INTO logbook (username,date,entry) VALUES(?,?,?)";
-    $statement = $mysqli->prepare($query);
-    $statement->bind_param("sss",$user,$date, $entry);
-    $result = $statement->execute();
-    return $result;
-}
+require_once 'server_requests.php';
+require_once 'dbconfig.php';
 
 function updateFloor($floor) {
 
     global $mysqli;
-    $query = "UPDATE elevatorNetwork SET requestedFloor = ? WHERE nodeID = 1";
+    $query = "UPDATE elevatornetwork SET requestedFloor = ? WHERE nodeID = 1";
     $statement = $mysqli->prepare($query);
     $statement->bind_param("i",$floor);
     $result = $statement->execute();
     return $result;
 }
 
-function getLogData() {
-
-    global $mysqli;
-    $query = "SELECT * FROM Command_Log";
-    $data = array();
-    $statement = $mysqli->prepare($query);
-    $statement->execute();
-    $result = $statement->get_result();
-    while($row = mysqli_fetch_assoc($result)) {
-        $data[] = $row;
-    }
-    return json_encode($data);
-}
-
 function getCurrentFloor() {
 
     global $mysqli;
-    $query = "SELECT currentFloor FROM elevatorNetwork WHERE nodeID = 1";
+    $query = "SELECT currentFloor FROM elevatornetwork WHERE nodeID = 1";
     $statement = $mysqli->prepare($query);
-    $result = $statement->execute();
-    return $result;
+    $statement->execute();
+    $result = $statement->get_result();
+    $row = mysqli_fetch_row($result);
+    return $row[0];
 
+}
+
+function moveElevator($floor) {
+
+    sleep(2);
+    global $mysqli;
+    $query = "UPDATE elevatornetwork SET currentFloor = ? WHERE nodeID = 1";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param("i",$floor);
+    $statement->execute();
 }
