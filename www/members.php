@@ -28,30 +28,22 @@ if ($_SESSION['user'] == null || $_SESSION == '') {
     </ul>
 </nav>
 <div class="container container-fluid pt-xl-5 text-center">
+    <div class="container pt-2">
+   <div class="form-group text-center justify-content-center">
+                <input type="button" class="btn elevator-button btn-outline-warning rounded-circle d-block my-2 mr-4 " value='3'
+                       onclick="moveElevator(this.value)">
+                <input type="button" class="btn elevator-button btn-outline-warning rounded-circle d-block my-2 mr-4" value='2'
+                       onclick="moveElevator(this.value)">
+                <input type="button" class="btn elevator-button btn-outline-warning rounded-circle d-block my-2 mr-4" value='1'
+                       onclick="moveElevator(this.value)">
+            </div>
+    </div>
     <div class="row pt-5 justify-content-center">
-        <div class="col-xl-4 col-xl-2 mb-4 text-center justify-content-center">
+        <div class="col-xl-5 col-xl-6 mb-4 text-center justify-content-center">
             <div class="card shadow justify-content-center">
                 <div class="card-body text-center">
-                    <div class="card-text text-center">
-                            <div class="text-body text-left d-inline-block">Requested Floor:</div>
-                            <div class="text-body d-inline-block" id="requestedFloor">2</div>
-                    </div>
-                    <div class="card-text text-center">
-                            <div class="text-body text-left d-inline-block">Current Floor:</div>
-                            <div class="text-body d-inline-block" id="currentFloor">3</div>
-                    </div>
-                    <div class="container container-fluid pt-xl-5 text-center">
-                        <div class="container pt-2">
-                            <div class="form-group text-center d-inline-block justify-content-center">
-                                <input type="button" class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2 " value='1'
-                                       onclick="moveElevator(this.value)">
-                                <input type="button" class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2" value='2'
-                                       onclick="moveElevator(this.value)">
-                                <input type="button" class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2" value='3'
-                                       onclick="moveElevator(this.value)">
-                            </div>
-                        </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
@@ -61,6 +53,6 @@ if ($_SESSION['user'] == null || $_SESSION == '') {
 </div>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendor/jquery/jquery.min.js"></script>
-<script src="js/index.js"></script>
+<script src="js/members.js"></script>
 </body>
 </html>

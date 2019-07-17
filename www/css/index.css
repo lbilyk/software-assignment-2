@@ -242,3 +242,32 @@
         display: none;
     }
 }
+.form-title{
+    background-color: #03A9F4;
+}
+
+#signUp,#loginBtn  {
+    width: 128px;
+    position: relative;
+    left: calc(100% - 128px);
+}
+
+#catBtn {
+    width: 250px;
+    height: 60px;
+    font-size: 20pt;
+}
+#photo {
+    width: 320px;
+    max-height: 480px;
+    height: auto;
+    text-align: center;
+}
+
+.copyright {
+    position: fixed;
+    width: 100%;
+    bottom: 20px;
+}
+
+

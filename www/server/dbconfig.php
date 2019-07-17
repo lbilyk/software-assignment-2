@@ -1,8 +1,8 @@
 <?php
 $dbhost = "localhost";
-$dbuser = "ese";
-$dbpass = "ese";
-$dbname = "elevator";
+$dbuser = "root";
+$dbpass = "Shunts5";
+$dbname = "assignment2";
 
 try {
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Sign Up</title>
+    <meta name="author" content="Lyubomyr Bilyk">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet">
+</head>
+<body id="page-top" class="bg-secondary">
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <a class="navbar-brand mr-1 text-white">Elevator Project</a>
+    <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <li class="nav-item dropdown no-arrow">
+            <a href="signup.html" class="nav-link d-inline active">Sign Up</a>
+            <a href="login.html" class="nav-link d-inline">Login</a>
+        </li>
+    </ul>
+</nav>
+<div class="container">
+    <div class="card mx-auto mt-5">
+        <div class="card-header mb-1 form-title font-weight-bold text-white">Sign Up</div>
+        <div class="card-body">
+            <form id="signUpForm" action="" method="POST">
+                <div class="form-group my-2">
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" onchange="validateCorrectLength(this.id)"
+                           required="required" autofocus="autofocus">
+                    <div id="usernameErr" class="text-muted small text-center"></div>
+                </div>
+
+                <div class="form-group mb-2">
+                    <input type="password" id="userPassword" name="password" class="form-control" placeholder="Password" onchange="validateCorrectLength(this.id)"
+                           required="required" autofocus="autofocus">
+                    <div id="userPasswordErr" class="text-muted small text-center"></div>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" name="password" class="form-control" onchange="validateCorrectLength(this.id)"
+                           placeholder="Confirm Password"
+                           required="required" autofocus="autofocus">
+                    <div id="confirmPasswordErr" class="text-muted small text-center"></div>
+                </div>
+                <div id="signUp" class="justify-content-center pt-2">
+                    <input id="signUpBtn" type="button" value="Add Me" class="btn btn-primary btn-block" onclick="validateSignUpForm()">
+                </div>
+            </form>
+        </div>
+        <hr/>
+        <div id="signUpError" class="text-muted small text-center pb-3 pt-0"></div>
+    </div>
+</div>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
