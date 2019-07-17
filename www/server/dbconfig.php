@@ -1,7 +1,7 @@
 <?php
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "Shunts5";
+$dbhost = "192.168.0.109";
+$dbuser = "nik";
+$dbpass = "123";
 $dbname = "assignment2";
 
 try {

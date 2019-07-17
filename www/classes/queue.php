@@ -15,24 +15,26 @@
 
             public function getCurrentFromDb(){
                 global $mysqli;
-                /* Fix query  */
-                $query = "SELECT currentFloor FROM elevatorNetwork";
-                //$statement = $mysqli->prepare($query);
+                $query = "SELECT currentFloor FROM elevatornetwork";
+                $statement = $mysqli->prepare($query);
                 $statement->execute();
-
                 $result = $statement->get_result();
-
-                return $result;
+                $row = mysqli_fetch_row($result);
+                return $row[0];
             }
 
             public function setCurrentOnDb(){
                 global $mysqli;
                 /* Fix query */
-                $query = "UPDATE elevatorNetwork SET currentFloor = ?";
+                $query = "INSERT elevatorNetwork SET currentFloor = ?";
                 $statement = $mysqli->prepare($query);
                 // $statement->bind_param("i",$floor);
                 $result = $statement->execute();
                 // return $result;
-        }
+            }
+
+            public function requestFloorOnDb($floor){
+
+            }
     }
 ?>

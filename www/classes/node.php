@@ -11,8 +11,8 @@
         public function getCurrentFloor(){
 
             $this->currentFloor = Queue::getCurrentFromDb();
-
-            $this->currentFloor = 2;
+            echo $this->currentFloor;
+            // $this->currentFloor = 2;
 
             /* return currentFloor */
             return $this->currentFloor;
@@ -27,7 +27,6 @@
             }else{
                 $this->validFlag = false;
             }
-            
         }
 
         public function requestFloor(){
@@ -36,7 +35,7 @@
 
             if ($this->validFlag == true){
 
-                /* Set request on database */
+               // Queue::requestFloorOnDb($this->floorNum);
                 echo "Requested floor ". $this->floorNum . "</br>";
 
             }else{

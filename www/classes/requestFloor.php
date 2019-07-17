@@ -1,7 +1,8 @@
 <?php 
-
+    require_once '../server/dbconfig.php';
     require_once __DIR__ . '/queue.php';
     require_once __DIR__ . '/node.php';
+
     
    
     //$nodeVal = $_POST["floor"];
