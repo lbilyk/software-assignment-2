@@ -1,18 +1,16 @@
 <?php
 require_once 'dbconfig.php';
+
 require_once '../classes/queue.php';
 require_once '../classes/node.php';
+require_once '../classes/floorNode.php';
+require_once '../classes/elevator.php';
 
 $action = filter_input(INPUT_POST, 'action');
 switch ($action) {
-    // case 'updateRequest':
-    //     $floor = filter_input(INPUT_POST, 'floor');
-    //     $success = updateFloor($floor);
-    //     echo $success;
-    //     break;
     case 'getCurrentFloor':
         try{
-            $newNode = new Node();
+            $newNode = new FloorNode(); 
             echo $newNode->getCurrentFloor();
         }
         catch (Exception $e)
@@ -22,7 +20,8 @@ switch ($action) {
         break;
     case 'moveElevator':
         try{
-            Node::moveElevator();
+            $elevatorObj = new Elevator();
+            $elevatorObj->moveElevator();
         }
         catch (Exception $e)
         {
@@ -32,7 +31,7 @@ switch ($action) {
     case 'addToQueue':
         $floor = filter_input(INPUT_POST, 'floor');
         try{
-            $newNode = new Node($floor);
+            $newNode = new FloorNode($floor);
             $newNode->requestFloor();
         }
         catch (Exception $e)

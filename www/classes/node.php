@@ -16,10 +16,9 @@
             catch(Exception $e){
                 echo 'Error:' .$e->getMessage();
             }
-            
         }
 
-        private function checkValid(){
+        protected function checkValid(){
 
             $current = $this->getCurrentFloor();
 
@@ -41,23 +40,9 @@
                 echo "Requested floor ". $this->floorNum . "</br>";
         }
 
-        public function setCurrentFloor(){
+        protected function setCurrentFloor(){
             Queue::setCurrentOnDb($this->floorNum);
         }
-
-        public function moveElevator(){
-            $nextFloor = Queue::getNextFloorFromDb();
-
-            /* Make sure nextFloor != 0 */
-            if ($nextFloor == 0){
-                throw new Exception("Next floor call was 0");
-            }
-            Queue::setCurrentOnDb($nextFloor);
-            Queue::removeFloorFromQueue();
-
-        }
-
-
 
     }
 
