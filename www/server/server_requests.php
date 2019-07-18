@@ -1,5 +1,4 @@
 <?php
-require_once 'functions.php';
 require_once 'dbconfig.php';
 require_once '../classes/queue.php';
 require_once '../classes/node.php';
@@ -12,19 +11,42 @@ switch ($action) {
     //     echo $success;
     //     break;
     case 'getCurrentFloor':
-        $newNode = new Node();
-        echo $newNode->getCurrentFloor();
+        try{
+            $newNode = new Node();
+            echo $newNode->getCurrentFloor();
+        }
+        catch (Exception $e)
+        {
+            echo 'Error: ' .$e->getMessage();
+        }
         break;
     case 'moveElevator':
-        Node::moveElevator();
+        try{
+            Node::moveElevator();
+        }
+        catch (Exception $e)
+        {
+            echo 'Error: ' .$e->getMessage();
+        }
         break;
     case 'addToQueue':
         $floor = filter_input(INPUT_POST, 'floor');
-        $newNode = new Node($floor);
-        $newNode->requestFloor();
+        try{
+            $newNode = new Node($floor);
+            $newNode->requestFloor();
+        }
+        catch (Exception $e)
+        {
+            echo 'Error: ' .$e->getMessage();
+        }
         break;
     case 'getQueue':
-        echo Queue::getQueueFromDb();
+        try{
+            echo Queue::getQueueFromDb();}
+        catch (Exception $e)
+        {
+            echo 'Error: ' .$e->getMessage();
+        }
         break;
     case 'deleteFromQueue':
         $id = filter_input(INPUT_POST, 'id');

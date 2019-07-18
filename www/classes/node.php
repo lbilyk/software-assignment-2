@@ -9,10 +9,14 @@
         }
 
         public function getCurrentFloor(){
-
-            $this->currentFloor = Queue::getCurrentFromDb();
-
-            return $this->currentFloor;
+            try{
+                $this->currentFloor = Queue::getCurrentFromDb();
+                return $this->currentFloor;
+            }
+            catch(Exception $e){
+                echo 'Error:' .$e->getMessage();
+            }
+            
         }
 
         private function checkValid(){
@@ -30,14 +34,11 @@
 
             $this->checkValid();
 
-            if ($this->validFlag == true){
-
+            if ($this->validFlag != true){
+                throw new Exception("Floor call was invalid");
+            }
                 Queue::setRequestOnDb($this->floorNum);
                 echo "Requested floor ". $this->floorNum . "</br>";
-
-            }else{
-                // throw error
-            }
         }
 
         public function setCurrentFloor(){
@@ -48,10 +49,11 @@
             $nextFloor = Queue::getNextFloorFromDb();
 
             /* Make sure nextFloor != 0 */
-            if ($nextFloor != 0){
-                Queue::setCurrentOnDb($nextFloor);
-                Queue::removeFloorFromQueue();
-            } 
+            if ($nextFloor == 0){
+                throw new Exception("Next floor call was 0");
+            }
+            Queue::setCurrentOnDb($nextFloor);
+            Queue::removeFloorFromQueue();
 
         }
 

@@ -7,10 +7,6 @@
                 $statement = $mysqli->prepare($query);
                 $statement->bind_param("i",$floor);
                 $statement->execute();
-
-                // $result = $statement->get_result();
-
-                // return $result;
             }
 
             public function getCurrentFromDb(){
@@ -21,6 +17,13 @@
                 $result = $statement->get_result();
                 $row = mysqli_fetch_row($result);
 
+                if($row[0] === NULL || $row[0] === NAN){
+                    throw new Exception("No value was grabbed from the database");
+                }
+
+                if($row[0] > 3 || $row[0] < 1){
+                    throw new Exception("Value grabbed was outside of range for values");
+                }
                 return $row[0];
             }
 
@@ -47,9 +50,6 @@
                 $query = "DELETE FROM floorqueue LIMIT 1";
                 $statement = $mysqli->prepare($query);
                 $statement->execute();
-                // $result = $statement->get_result();
-                // $row = mysqli_fetch_row($result);
-                // return $row[0];
             }
 
             public function removeFloorFromQueueById($id){
@@ -70,6 +70,10 @@
                 while($row = mysqli_fetch_assoc($result)) {
                     $entries[] = $row;
                 }
+                if( $entries === NULL ){
+                    throw new Exception("No array found in database");
+                }
+
                 return json_encode($entries);
             }
 
