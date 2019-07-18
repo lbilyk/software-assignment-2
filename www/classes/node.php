@@ -4,17 +4,14 @@
         private $validFlag;
         protected $floorNum;
 
-        public function __construct($floor){
+        public function __construct($floor = 1){
             $this->floorNum = $floor;
         }
 
         public function getCurrentFloor(){
 
             $this->currentFloor = Queue::getCurrentFromDb();
-            echo $this->currentFloor;
-            // $this->currentFloor = 2;
 
-            /* return currentFloor */
             return $this->currentFloor;
         }
 
@@ -35,13 +32,31 @@
 
             if ($this->validFlag == true){
 
-               // Queue::requestFloorOnDb($this->floorNum);
+                Queue::setRequestOnDb($this->floorNum);
                 echo "Requested floor ". $this->floorNum . "</br>";
 
             }else{
                 // throw error
             }
         }
+
+        public function setCurrentFloor(){
+            Queue::setCurrentOnDb($this->floorNum);
+        }
+
+        public function moveElevator(){
+            $nextFloor = Queue::getNextFloorFromDb();
+
+            /* Make sure nextFloor != 0 */
+            if ($nextFloor != 0){
+                Queue::setCurrentOnDb($nextFloor);
+                Queue::removeFloorFromQueue();
+            } 
+
+        }
+
+
+
     }
 
 

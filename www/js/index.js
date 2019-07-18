@@ -1,7 +1,10 @@
 const SERVER_REQUESTS = 'server/server_requests.php';
+const queueID = 'queueItem_';
 
 $(function () {
-    setInterval(getCurrentFloor, 1000);
+    setInterval(getCurrentFloor, 500);
+    setInterval(getQueue, 500);
+    setInterval(moveElevator,3000);
 });
 
 function callToServer(data, dataType) {
@@ -20,25 +23,32 @@ function callToServer(data, dataType) {
     return response;
 }
 
-function moveElevator(floor) {
+function requestFloor(floor) {
 
     let currentFloor = parseInt($('#currentFloor').text());
-    if (floor !== currentFloor) {
-        let data = 'action=updateRequest&floor=' + floor;
+    let requestedFloor = parseInt($('#requestedFloor').text());
+
+    if (floor == currentFloor || floor == requestedFloor) {
+        return;
+    }else {
+        // alert('test');
+        let data = 'action=addToQueue&floor=' + floor;
         let dataType = 'text';
-        let success = callToServer(data, dataType);
-        if (success) {
-            ($('#requestedFloor').text(floor));
-            $.ajax({
+        callToServer(data, dataType);
+        $('#requestedFloor').text(floor);
+
+    }
+}
+
+function moveElevator() {
+       $.ajax({
                 type: "POST",
                 url: SERVER_REQUESTS,
                 async: true,
-                data: 'action=moveElevator&floor=' + floor,
+                data: 'action=moveElevator',
                 success: function (data) {
                 }
             });
-        }
-    }
 }
 
 function getCurrentFloor() {
@@ -50,6 +60,31 @@ function getCurrentFloor() {
     $('#currentFloor').text(currentFloor);
 }
 
+function getQueue() {
+
+    let data = 'action=getQueue';
+    let dataType = 'json';
+    let queue = callToServer(data,dataType);
+
+    $('#queueBox').empty();
+    for(let i = 0; i < queue.length; i++) {
+        $('#queueBox').append('       <a href="#" onclick="deleteFromQueue(this.id)" id="' + queueID + queue[i].id + '"\
+                                  class="list-group-item list-group-item-action text-center align-items-center queueItem">\
+                                   <div class="d-flex w-100 justify-content-center text-center small">Going to Floor: ' + queue[i].nodeID + '\
+                                   </div>\
+                               </a>');
+    }
+}
+
+function deleteFromQueue(queueItemID) {
+
+    let id = parseInt(queueItemID.substring(queueID.length));
+    let data= "action=deleteFromQueue&id=" + id;
+    let dataType= 'text';
+    callToServer(data,dataType);
+    getQueue();
+}
+
 function validateCorrectLength(id) {
     const minLength = 7;
     if ($('#' + id).prop('value').length < minLength) {
@@ -57,7 +92,6 @@ function validateCorrectLength(id) {
     } else {
         $('#' + id + 'Err').html('');
     }
-
 }
 
 function validateSignUpForm() {
@@ -103,7 +137,6 @@ function validateSignUpForm() {
             data: form.serialize(),
             success: function (data) {
                 let response = data.trim();
-                console.log(response);
                 if (response == USER_EXISTS) {
                     alert("This username is already taken!");
                     // location.reload(true);
@@ -117,5 +150,3 @@ function validateSignUpForm() {
         });
     }
 }
-
-

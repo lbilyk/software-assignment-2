@@ -1,21 +1,40 @@
 <?php 
     class Queue 
     {
-            public function getNextFloor(){
+            public function setRequestOnDb($floor){
                 global $mysqli;
-                /* Fix query  */
-                $query = "SELECT requestedFloor FROM elevatorNetwork";
+                $query = "INSERT INTO `floorqueue`(nodeID) VALUES (?);";
                 $statement = $mysqli->prepare($query);
+                $statement->bind_param("i",$floor);
                 $statement->execute();
 
-                $result = $statement->get_result();
+                // $result = $statement->get_result();
 
-                return $result;
+                // return $result;
             }
 
             public function getCurrentFromDb(){
                 global $mysqli;
-                $query = "SELECT currentFloor FROM elevatornetwork";
+                $query = "SELECT currentFloor FROM elevatornetwork WHERE nodeID = 1";
+                $statement = $mysqli->prepare($query);
+                $statement->execute();
+                $result = $statement->get_result();
+                $row = mysqli_fetch_row($result);
+
+                return $row[0];
+            }
+
+            public function setCurrentOnDb($floor){
+                global $mysqli;
+                $query = "UPDATE elevatornetwork SET currentFloor = ?";
+                $statement = $mysqli->prepare($query);
+                $statement->bind_param("i",$floor);
+                $result = $statement->execute();
+            }
+
+            public function getNextFloorFromDb(){
+                global $mysqli;
+                $query = "SELECT nodeID FROM floorqueue LIMIT 1";
                 $statement = $mysqli->prepare($query);
                 $statement->execute();
                 $result = $statement->get_result();
@@ -23,18 +42,36 @@
                 return $row[0];
             }
 
-            public function setCurrentOnDb(){
+            public function removeFloorFromQueue(){
                 global $mysqli;
-                /* Fix query */
-                $query = "INSERT elevatorNetwork SET currentFloor = ?";
+                $query = "DELETE FROM floorqueue LIMIT 1";
                 $statement = $mysqli->prepare($query);
-                // $statement->bind_param("i",$floor);
-                $result = $statement->execute();
-                // return $result;
+                $statement->execute();
+                // $result = $statement->get_result();
+                // $row = mysqli_fetch_row($result);
+                // return $row[0];
             }
 
-            public function requestFloorOnDb($floor){
-
+            public function removeFloorFromQueueById($id){
+                global $mysqli;
+                $query = "DELETE FROM floorqueue WHERE id = ?";
+                $statement = $mysqli->prepare($query);
+                $statement->bind_param("i",$id);
+                $statement->execute();
             }
+
+            public function getQueueFromDb(){
+                global $mysqli;
+                $query = "SELECT * FROM floorqueue";
+                $entries = array();
+                $statement = $mysqli->prepare($query);
+                $statement->execute();
+                $result = $statement->get_result();
+                while($row = mysqli_fetch_assoc($result)) {
+                    $entries[] = $row;
+                }
+                return json_encode($entries);
+            }
+
     }
 ?>
