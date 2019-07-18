@@ -17,6 +17,17 @@ switch ($action) {
         $floor = filter_input(INPUT_POST, 'floor');
         moveElevator($floor);
         break;
+    case 'addToQueue':
+        $floor = filter_input(INPUT_POST, 'floor');
+        addToQueue();
+        break;
+    case 'getQueue':
+        echo getQueue();
+        break;
+    case 'deleteFromQueue':
+        $id = filter_input(INPUT_POST, 'id');
+        removeFromQueue();
+        break;
     default:
         echo null;
         break;

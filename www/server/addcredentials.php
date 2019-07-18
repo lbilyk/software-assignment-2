@@ -1,25 +1,29 @@
 <?php
+require_once 'dbconfig.php';
 session_start();
 
 $username = $_POST['username'];
 $password = $_POST['password'];
 
 if($username && $password) {
-    $validUsers = json_decode(file_get_contents('valid_users.json'));
 
-    if($validUsers != null) {
-        foreach ($validUsers as $user) {
-            if ($user->username == $username) {
-                echo "exists";
-                return;
-            }
+    global $mysqli;
+    $query = "SELECT * FROM authorized_users";
+    $statement = $mysqli->prepare($query);
+    $statement->execute();
+    $result = $statement->get_result();
+    while($user = mysqli_fetch_assoc($result)) {
+        if($user['username'] == $username) {
+            echo "exists";
+            return;
         }
     }
 
-    $validUsers[] = ['username' => $username, 'password' => $password];
-    $jsonData = json_encode($validUsers, JSON_PRETTY_PRINT);
-
-    if(file_put_contents('valid_users.json', $jsonData)) {
+    $query = "INSERT INTO authorized_users (username,password) VALUES(?,?)";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param("ss",$username,$password);
+    $success = $statement->execute();
+    if($success) {
         echo "success";
         return;
     }

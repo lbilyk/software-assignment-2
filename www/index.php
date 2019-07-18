@@ -33,34 +33,49 @@ if ($_SESSION['user'] == null || $_SESSION == '') {
             <div class="card shadow justify-content-center">
                 <div class="card-body text-center">
                     <div class="card-text text-center">
-                            <div class="text-body text-left d-inline-block">Requested Floor:</div>
-                            <div class="text-body d-inline-block" id="requestedFloor">2</div>
+                        <div class="text-body text-left d-inline-block">Requested Floor:</div>
+                        <div class="text-body d-inline-block" id="requestedFloor">2</div>
                     </div>
                     <div class="card-text text-center">
-                            <div class="text-body text-left d-inline-block">Current Floor:</div>
-                            <div class="text-body d-inline-block" id="currentFloor">3</div>
+                        <div class="text-body text-left d-inline-block">Current Floor:</div>
+                        <div class="text-body d-inline-block" id="currentFloor">3</div>
                     </div>
                     <div class="container container-fluid pt-xl-5 text-center">
                         <div class="container pt-2">
                             <div class="form-group text-center d-inline-block justify-content-center">
-                                <input type="button" class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2 " value='1'
+                                <input type="button"
+                                       class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2 " value='1'
                                        onclick="moveElevator(this.value)">
-                                <input type="button" class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2" value='2'
+                                <input type="button"
+                                       class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2" value='2'
                                        onclick="moveElevator(this.value)">
-                                <input type="button" class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2" value='3'
+                                <input type="button"
+                                       class="btn elevator-button d-inline-block btn-outline-dark my-2 mr-2" value='3'
                                        onclick="moveElevator(this.value)">
                             </div>
                         </div>
+                    </div>
                 </div>
+            </div>
+            <div class="card shadow justify-content-center mt-3">
+                <div class="card-body text-center">
+                    <div class="text-center">
+                        <div class="card-title d-inline-block">Request Queue</div>
+                    </div>
+                    <div class="container container-fluid text-center">
+                        <div class="container overflow-auto">
+                           <div id="queueBox" class="container">
+
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="text-center copyright">
-    <hr/>
-    <span>Copyright © Lyubomyr Bilyk and Team</span>
-</div>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="js/index.js"></script>
+        <div class="text-center copyright">
+            <hr/>
+            <span>Copyright © Lyubomyr Bilyk and Team</span>
+        </div>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="js/index.js"></script>
 </body>
 </html>

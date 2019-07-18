@@ -14,7 +14,6 @@ if ($username && $password) {
     $result = $statement->get_result();
     $user = $result->fetch_assoc();
     if ($user["username"] == $username && $user["password"] == $password) {
-        echo "HEYYYYY";
         $authenticated = true;
         $_SESSION['user'] = $user["username"];
         header('Location: ../index.php');

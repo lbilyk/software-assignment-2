@@ -1,7 +1,8 @@
 const SERVER_REQUESTS = 'server/server_requests.php';
+const queueID = 'queueItem_';
 
 $(function () {
-    setInterval(getCurrentFloor, 1000);
+    setInterval(getQueue, 1000);
 });
 
 function callToServer(data, dataType) {
@@ -24,7 +25,7 @@ function moveElevator(floor) {
 
     let currentFloor = parseInt($('#currentFloor').text());
     if (floor !== currentFloor) {
-        let data = 'action=updateRequest&floor=' + floor;
+        let data = 'action=addToQueue&floor=' + floor;
         let dataType = 'text';
         let success = callToServer(data, dataType);
         if (success) {
@@ -46,8 +47,32 @@ function getCurrentFloor() {
     let data = 'action=getCurrentFloor';
     let dataType = 'text';
     let currentFloor = callToServer(data, dataType);
-    console.log(currentFloor);
     $('#currentFloor').text(currentFloor);
+}
+
+function getQueue() {
+
+    let data = 'action=getQueue';
+    let dataType = 'json';
+    let queue = callToServer(data,dataType);
+
+    $('#queueBox').empty();
+    for(let i = 0; i < queue.length; i++) {
+        $('#queueBox').append('       <a href="#" onclick="deleteFromQueue(this.id)" id="' + queueID + queue[i].id + '"\
+                                  class="list-group-item list-group-item-action text-center align-items-center queueItem">\
+                                   <div class="d-flex w-100 justify-content-center text-center small">Going to Floor: ' + queue[i].nodeID + '\
+                                   </div>\
+                               </a>');
+    }
+}
+
+function deleteFromQueue(queueItemID) {
+
+    let id = parseInt(queueItemID.substring(queueID.length));
+    let data= "action=deleteFromQueue&id=" + id;
+    let dataType= 'text';
+    callToServer(data,dataType);
+    getQueue();
 }
 
 function validateCorrectLength(id) {
@@ -57,7 +82,6 @@ function validateCorrectLength(id) {
     } else {
         $('#' + id + 'Err').html('');
     }
-
 }
 
 function validateSignUpForm() {
@@ -103,7 +127,6 @@ function validateSignUpForm() {
             data: form.serialize(),
             success: function (data) {
                 let response = data.trim();
-                console.log(response);
                 if (response == USER_EXISTS) {
                     alert("This username is already taken!");
                     // location.reload(true);
