@@ -1,5 +1,5 @@
 <?php
-$dbhost = "192.168.0.109";
+$dbhost = "localhost";
 $dbuser = "nik";
 $dbpass = "123";
 $dbname = "assignment2";
